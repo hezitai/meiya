@@ -1,17 +1,58 @@
+<!--
+ * @Author: hhh
+ * @Date: 2021-07-12 10:04:17
+ * @LastEditTime: 2021-07-16 14:52:38
+ * @LastEditors: hhh
+ * @Description: 
+ * @FilePath: /zk/newapp/public/index.html
+-->
 <!DOCTYPE html>
 <html lang="">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
+    <title>
+        <%= htmlWebpackPlugin.options.title %>
+    </title>
+</head>
+<style>
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+    }
+    /* * {
+        margin: 0;
+        padding: 0;
+    } */
+</style>
+
+<body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-  </body>
+</body>
+
 </html>
+<script>
+    fnResize()
+    window.onresize = function() {
+        fnResize()
+    }
+
+    function fnResize() {
+        var deviceWidth = document.documentElement.clientWidth || window.innerWidth
+        if (deviceWidth >= 750) {
+            deviceWidth = 750
+        }
+        if (deviceWidth <= 320) {
+            deviceWidth = 320
+        }
+        document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px'
+    }
+</script>
