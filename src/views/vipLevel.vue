@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-16 14:03:43
- * @LastEditTime: 2021-07-19 19:40:33
+ * @LastEditTime: 2021-07-20 20:06:20
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/vipLevel.vue
@@ -9,11 +9,13 @@
 <template>
   <div id="vipLevel">
     <div class="recommend-top">
+      <!-- <img class="back-img" v-show="userInfo.levelId == 2" src="../assets/01.png" alt="">
+      <img class="back-img" v-show="userInfo.levelId == 1 || userInfo.levelId == 3" src="../assets/06.png" alt=""> -->
       <img class="back-img" src="../assets/01.png" alt="">
       <div class="recommend-top-top">
-        <div class="recommend-top-top-left">
-          <p class="text">黄金会员</p>
-          <p class="text2">VIP CLUB</p>
+        <div class="recommend-top-top-left" :class="{goldVip:userInfo.levelId == 2}">
+          <p class="text" :class="{goldtext:userInfo.levelId == 2}">艺赞尊贵会员</p>
+          <p class="text2" :class="{goldtext:userInfo.levelId == 2}">VIP CLUB</p>
         </div>
         <div class="recommend-top-top-right">
           <img :src="userInfo.headImg" alt="">
@@ -22,14 +24,17 @@
       <div class="recommend-top-btm">
         <div class="recommend-top-btm-top">
           <p class="username">{{userInfo.nickName}}</p>
-          <p class="userlevel">黄金用户</p>
-          <span class="deadline">2021-07-01</span>
+          <!-- <p class="userlevel">黄金用户</p> -->
+          <span class="deadline">{{userInfo.createTime}}</span>
         </div>
       </div>
     </div>
     <div class="viplevel-btm">
       <div class="viplevel-btm-item">
-        <p class="title"><img src="../assets/02.png" alt=""></p>
+        <p class="title">
+          <!-- <img src="../assets/02.png" alt=""> -->
+          <span class="title-span">{{list[0].name}}</span>
+        </p>
         <ul v-if="list[0]">
           <!-- <li>权益一：获得10口牙销售权，原价：9800元，冰点价：4800元</li>
           <li>权益一：获得10口牙销售权，原价：9800元，冰点价：4800元</li>
@@ -40,12 +45,16 @@
           <li>{{list[0].rightsExplain}}</li>
         </ul>
         <div class="btn-box">
-          <img class="btn" src="../assets/11.png" alt="">
+          <img class="btn" v-if="userInfo.level == list[1].level" src="../assets/11.png" alt="">
+          <img class="btn" v-if="userInfo.level != 1 &&userInfo.level > list[1].level" src="../assets/12.png" alt="">
         </div>
 
       </div>
       <div class="viplevel-btm-item">
-        <p class="title"><img src="../assets/07.png" alt=""></p>
+        <p class="title">
+          <!-- <img src="../assets/07.png" alt=""> -->
+          <span class="title-span">{{list[1].name}}</span>
+        </p>
         <ul v-if="list[1]">
           <!-- <li>权益一：获得10口牙销售权，原价：9800元，冰点价：4800元</li>
           <li>权益一：获得10口牙销售权，原价：9800元，冰点价：4800元</li>
@@ -56,7 +65,8 @@
           <li>{{list[1].rightsExplain}}</li>
         </ul>
         <div class="btn-box">
-          <img class="btn" src="../assets/12.png" alt="">
+          <img class="btn" v-if="userInfo.level == list[1].level" src="../assets/11.png" alt="">
+          <img class="btn" v-if="userInfo.level != 1 &&userInfo.level > list[1].level" src="../assets/12.png" alt="">
         </div>
       </div>
     </div>
@@ -69,7 +79,7 @@ export default {
   name: 'vipLevel',
   data() {
     return {
-      list:[],
+      list: [],
     }
   },
   beforeMount() {
@@ -82,7 +92,7 @@ export default {
     this.levelInfo()
   },
   methods: {
-     async levelInfo() {
+    async levelInfo() {
       let _this = this;
       let result = await request({
         url: "/level_info/queryData",
@@ -95,7 +105,7 @@ export default {
         console.log(error);
         Dialog.alert({
           message: error,
-        }).then(() => {});
+        }).then(() => { });
       }
     },
   }
@@ -105,6 +115,9 @@ export default {
 #vipLevel {
   width: 100%;
   height: 100%;
+  .goldtext {
+    color: #cfbb8a !important;
+  }
   .recommend-top {
     width: 100%;
     border: 1px solid #3e404d;
@@ -127,22 +140,37 @@ export default {
       width: 100%;
       height: 2.5rem;
       position: relative;
+      .goldVip {
+        background: url("../assets/08.png") no-repeat center center;
+        background-size: 100% 100%;
+      }
+      .normalVip {
+        background: url("../assets/09.png") no-repeat center center;
+        background-size: 100% 100%;
+      }
       .recommend-top-top-left {
         width: 4rem;
         height: 1rem;
         position: absolute;
         left: 0.6rem;
         top: 1.3rem;
-        background: url("../assets/08.png") no-repeat center center;
+        background: url("../assets/09.png") no-repeat center center;
         background-size: 100% 100%;
         .text {
-          color: #cfbb8a;
+          // color: #cfbb8a;
+          color: #c1c1c1;
           position: absolute;
-          left: 1.55rem;
+          width: 1.8rem;
+          left: 1.3rem;
           top: 0.09rem;
+          font-size: 12px;
+        }
+        .goldtext {
+          color: #cfbb8a !important;
         }
         .text2 {
-          color: #cfbb8a;
+          // color: #cfbb8a;
+          color: #c1c1c1;
           position: absolute;
           left: 1.7rem;
           top: 0.5rem;
@@ -157,8 +185,8 @@ export default {
         position: absolute;
         right: 0.7rem;
         top: 1.2rem;
-        img{
-          width:100%;
+        img {
+          width: 100%;
           border-radius: 50%;
         }
       }
@@ -221,21 +249,55 @@ export default {
       background: url("../assets/04.png") no-repeat center center;
       background-size: 100% 100%;
       margin-top: 0.2rem;
-      margin-bottom:.2rem;
+      margin-bottom: 0.2rem;
       // display: flex;
       // justify-content: center;
       // align-items: center;
       .title {
         width: 100%;
-
+        text-align: center;
+        display: flex;
+        justify-content: center;
         margin-top: 0.08rem;
         img {
           width: 80%;
         }
+        .title-span {
+          color: #cfbb8a;
+          display: block;
+          width: 1.3rem;
+          font-size: 12px;
+          margin: 0.15rem 0;
+          position: relative;
+        }
+        .title-span:before {
+          content: "";
+          display: block;
+          width: 0.8rem;
+          height: 0.03rem;
+          background: #cfbb8a;
+          position:absolute;
+          left: -.7rem;
+          top:.15rem;
+          border-top-left-radius: 100%;
+          border-bottom-left-radius: 100%;
+        }
+        .title-span:after {
+          content: "";
+          display: block;
+          width: 0.8rem;
+          height: 0.03rem;
+          background: #cfbb8a;
+          position:absolute;
+          right: -.7rem;
+          top:.15rem;
+          border-top-right-radius: 100%;
+          border-bottom-right-radius: 100%;
+        }
       }
       ul {
         width: calc(100% - 0.2rem);
-        padding: 0 .1rem;
+        padding: 0 0.1rem;
         margin: 0;
         li {
           //   padding: 0;

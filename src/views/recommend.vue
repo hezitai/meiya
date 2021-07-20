@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-20 15:48:54
+ * @LastEditTime: 2021-07-20 19:37:19
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/recommend.vue
@@ -9,11 +9,13 @@
 <template>
   <div id="recommend">
     <div class="recommend-top">
+      <!-- <img class="back-img" v-show="userInfo.levelId == 2" src="../assets/01.png" alt="">
+      <img class="back-img" v-show="userInfo.levelId == 1 || userInfo.levelId == 3" src="../assets/06.png" alt=""> -->
       <img class="back-img" src="../assets/01.png" alt="">
       <div class="recommend-top-top">
-        <div class="recommend-top-top-left">
-          <p class="text">{{userInfo.levelName}}</p>
-          <p class="text2">VIP CLUB</p>
+        <div class="recommend-top-top-left" :class="{goldVip:userInfo.levelId == 2}">
+          <p class="text" :class="{goldtext:userInfo.levelId == 2}">{{userInfo.levelName}}</p>
+          <p class="text2" :class="{goldtext:userInfo.levelId == 2}">VIP CLUB</p>
         </div>
         <div class="recommend-top-top-right">
           <img :src="userInfo.headImg" alt="">
@@ -22,9 +24,9 @@
       <div class="recommend-top-btm">
         <div class="recommend-top-btm-top">
           <p class="username">{{userInfo.nickName}}</p>
-          <p class="userlevel" v-show="userInfo.levelId == 2">黄金用户</p>
-          <p class="userlevel" v-show="userInfo.levelId == 1">钻石用户</p>
-          <p class="userlevel" v-show="userInfo.levelId == 3">游客</p>
+          <!-- <p class="userlevel" v-show="userInfo.levelId == 2">黄金用户</p> -->
+          <!-- <p class="userlevel" v-show="userInfo.levelId == 1">钻石用户</p>
+          <p class="userlevel" v-show="userInfo.levelId == 3">游客</p> -->
           <span class="deadline">{{userInfo.createTime}}</span>
         </div>
         <div class="recommend-top-btm-btm" @click="goLevel">
@@ -177,22 +179,37 @@ export default {
     width: 100%;
     height: 2.5rem;
     position: relative;
+    .goldVip {
+      background: url("../assets/08.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
+    .normalVip {
+      background: url("../assets/09.png") no-repeat center center;
+      background-size: 100% 100%;
+    }
     .recommend-top-top-left {
       width: 4rem;
       height: 1rem;
       position: absolute;
       left: 0.6rem;
       top: 1.3rem;
-      background: url("../assets/08.png") no-repeat center center;
+      background: url("../assets/09.png") no-repeat center center;
       background-size: 100% 100%;
       .text {
-        color: #cfbb8a;
+        // color: #cfbb8a;
+        color: #c1c1c1;
         position: absolute;
-        left: 1.55rem;
+        width: 1.8rem;
+        left: 1.3rem;
         top: 0.09rem;
+        font-size: 12px;
+      }
+      .goldtext {
+        color: #cfbb8a !important;
       }
       .text2 {
-        color: #cfbb8a;
+        // color: #cfbb8a;
+        color: #c1c1c1;
         position: absolute;
         left: 1.7rem;
         top: 0.5rem;
