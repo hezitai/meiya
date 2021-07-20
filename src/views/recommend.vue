@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-20 15:12:00
+ * @LastEditTime: 2021-07-20 15:48:54
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/recommend.vue
@@ -12,7 +12,7 @@
       <img class="back-img" src="../assets/01.png" alt="">
       <div class="recommend-top-top">
         <div class="recommend-top-top-left">
-          <p class="text">黄金会员</p>
+          <p class="text">{{userInfo.levelName}}</p>
           <p class="text2">VIP CLUB</p>
         </div>
         <div class="recommend-top-top-right">
@@ -22,8 +22,10 @@
       <div class="recommend-top-btm">
         <div class="recommend-top-btm-top">
           <p class="username">{{userInfo.nickName}}</p>
-          <p class="userlevel">黄金用户</p>
-          <span class="deadline">2021-07-01</span>
+          <p class="userlevel" v-show="userInfo.levelId == 2">黄金用户</p>
+          <p class="userlevel" v-show="userInfo.levelId == 1">钻石用户</p>
+          <p class="userlevel" v-show="userInfo.levelId == 3">游客</p>
+          <span class="deadline">{{userInfo.createTime}}</span>
         </div>
         <div class="recommend-top-btm-btm" @click="goLevel">
           去升级

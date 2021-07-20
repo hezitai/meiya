@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-20 15:08:02
+ * @LastEditTime: 2021-07-20 15:49:01
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/center.vue
@@ -25,7 +25,9 @@
     <div class="content">
       <div class="get-vip">
         <p class="title">升级享受更多权益</p>
-        <span class="upgrade" @click="upgrade">升级黄钻</span>
+        <span class="upgrade" v-show="userInfo.levelId == 3" @click="upgrade">升级黄钻</span>
+        <span class="upgrade" v-show="userInfo.levelId == 2" @click="upgrade">升级钻石</span>
+        <span class="upgrade" v-show="userInfo.levelId == 1" @click="upgrade">查看会员</span>
       </div>
     </div>
   </div>
