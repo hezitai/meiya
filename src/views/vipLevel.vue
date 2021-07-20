@@ -21,7 +21,7 @@
       </div>
       <div class="recommend-top-btm">
         <div class="recommend-top-btm-top">
-          <p class="username">{{userInfo.name}}</p>
+          <p class="username">{{userInfo.nickName}}</p>
           <p class="userlevel">黄金用户</p>
           <span class="deadline">2021-07-01</span>
         </div>
@@ -63,6 +63,7 @@
   </div>
 </template>
 <script>
+import { Dialog } from 'vant';
 import request from '../utils/request.js'
 export default {
   name: 'vipLevel',
@@ -92,6 +93,9 @@ export default {
         _this.list = result.data.data;
       } catch (error) {
         console.log(error);
+        Dialog.alert({
+          message: error,
+        }).then(() => {});
       }
     },
   }

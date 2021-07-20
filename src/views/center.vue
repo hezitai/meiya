@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-19 19:38:37
+ * @LastEditTime: 2021-07-20 15:08:02
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/center.vue
@@ -17,9 +17,9 @@
       </div>
 
       <div class="user-info">
-        <p class="user-name">{{userInfo.name}}</p>
+        <p class="user-name">{{userInfo.nickName}}</p>
         <p class="user-phone">手机号:{{userInfo.mobile}}</p>
-        <p class="exclusive-code" @click="getRecUrl">专属邀请码</p>
+        <p class="exclusive-code" @click="goQrcode">专属邀请码</p>
       </div>
     </div>
     <div class="content">
@@ -31,6 +31,7 @@
   </div>
 </template>
 <script>
+import { Dialog } from 'vant';
 import request from '../utils/request.js'
 import { ImagePreview } from 'vant';
 export default {
@@ -51,19 +52,9 @@ export default {
     upgrade() {
       this.$router.push({ path: "/viplevel" })
     },
-    async getRecUrl() {
-      let _this = this;
-      let result = await request({
-        url: "/my_info/getRecUrl",
-        method: "get",
-      });
-      try {
-        console.log(result.data.data);
-        ImagePreview([result.data.data]);
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    goQrcode(){
+      this.$router.push({path:'/qrcode'})
+    }
   }
 }
 </script>

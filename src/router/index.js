@@ -1,7 +1,7 @@
 /*
  * @Author: hhh
  * @Date: 2021-07-12 10:48:26
- * @LastEditTime: 2021-07-19 19:36:43
+ * @LastEditTime: 2021-07-20 15:06:15
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/router/index.js
@@ -52,6 +52,15 @@ export default new Router({
                 import ('../views/404'),
             meta: {
                 title: '失效'
+            }
+        },
+
+        {
+            path: '/qrcode',
+            component: () =>
+                import ('../views/qrcode'),
+            meta: {
+                title: '我的专属码'
             }
         },
         {

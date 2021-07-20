@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:31:43
- * @LastEditTime: 2021-07-19 19:17:05
+ * @LastEditTime: 2021-07-19 20:19:52
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/components/index.vue
@@ -24,6 +24,7 @@
 <script>
 import { Notify } from 'vant';
 import { Toast } from 'vant';
+import { Dialog } from 'vant';
 import request from '../utils/request.js'
 export default {
   name: 'index',
@@ -55,7 +56,10 @@ export default {
         localStorage.setItem('userInfo', JSON.stringify(result.data.data));
         // alert(result.data)
       } catch (error) {
-        console.log(error);
+        Dialog.alert({
+          message: error,
+        }).then(() => {});
+        localStorage.setItem('userInfo', '');
       }
     }
   },

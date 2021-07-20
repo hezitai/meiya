@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-19 19:38:17
+ * @LastEditTime: 2021-07-20 15:12:00
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/recommend.vue
@@ -21,7 +21,7 @@
       </div>
       <div class="recommend-top-btm">
         <div class="recommend-top-btm-top">
-          <p class="username">{{userInfo.name}}</p>
+          <p class="username">{{userInfo.nickName}}</p>
           <p class="userlevel">黄金用户</p>
           <span class="deadline">2021-07-01</span>
         </div>
@@ -31,7 +31,9 @@
       </div>
     </div>
     <div class="recommend-btm">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <img class="nodata" src="../assets/13.png" v-show="list.length == 0" alt="">
+      <p class="nodata-p" v-show="list.length == 0">您还没有推荐</p>
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-show="list.length != 0">
         <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
           <div class="list-item" v-for="(item, $index) in list" :key="$index">
             <div class="list-item-left" v-if="list">
@@ -55,6 +57,7 @@
 </template>
 <script>
 import request from '../utils/request.js'
+import { Dialog } from 'vant';
 export default {
   name: "recommend",
   data() {
@@ -134,6 +137,9 @@ export default {
         _this.finished = true;
       } catch (error) {
         console.log(error);
+        Dialog.alert({
+          message: error,
+        }).then(() => { });
       }
     },
     goLevel() {
@@ -257,6 +263,15 @@ export default {
   width: 100%;
   height: calc(100% - 5rem);
   overflow: auto;
+  .nodata {
+    width: 60%;
+    // height: 60%;
+  }
+  .nodata-p {
+    font-weight: 300;
+    color: #4c4b4b;
+    font-size: 14px;
+  }
   .list-item {
     width: 100%;
     height: 1rem;

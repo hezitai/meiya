@@ -1,7 +1,7 @@
 <!--
  * @Author: hhh
  * @Date: 2021-07-12 10:51:30
- * @LastEditTime: 2021-07-19 19:38:51
+ * @LastEditTime: 2021-07-20 15:14:36
  * @LastEditors: hhh
  * @Description: 
  * @FilePath: /zk/newapp/src/views/earnings.vue
@@ -9,7 +9,9 @@
 <template>
   <div id="earnings">
     <!--  v-model="isLoading" -->
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+    <img class="nodata" src="../assets/13.png" v-show="list.length == 0" alt="">
+    <p class="nodata-p" v-show="list.length == 0">您还没有收益</p>
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh" v-show="list.length != 0">
       <!--  @load="onLoad"  v-model="loading"-->
       <van-list :finished="finished" v-model="loading" finished-text="没有更多了" @load="onLoad">
         <div class="list-item" v-for="(item, $index) in list" :key="$index">
@@ -35,6 +37,7 @@
 </template>
 <script>
 import { Toast } from 'vant';
+import { Dialog } from 'vant';
 import request from '../utils/request.js'
 export default {
   name: "earnings",
@@ -46,7 +49,7 @@ export default {
       loading: false,
       finished: false,
       current: 0,
-      userInfo:{},
+      userInfo: {},
     }
   },
 
@@ -112,6 +115,9 @@ export default {
         _this.finished = true;
       } catch (error) {
         console.log(error);
+        Dialog.alert({
+          message: error,
+        }).then(() => { });
       }
     },
   }
@@ -122,6 +128,15 @@ export default {
   width: 100%;
   height: calc(100% - 1rem);
   padding-top: 1rem;
+  .nodata {
+    width: 60%;
+    // height: 60%;
+  }
+  .nodata-p {
+    font-weight: 300;
+    color: #4c4b4b;
+    font-size: 14px;
+  }
 }
 .list-item {
   display: flex;
@@ -141,7 +156,7 @@ export default {
       border-radius: 50%;
       background: #ccc;
       margin: 0.1rem 0.2rem 0 0.35rem;
-      img{
+      img {
         width: 100%;
       }
     }
